@@ -9,6 +9,7 @@ import { Config } from './config/config';
 import { UserModule } from './user/user.module';
 import { ServicesModule } from './services/services.module';
 import { BooksModule } from './books/books.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BooksModule } from './books/books.module';
     }),
     ServicesModule,
     BooksModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

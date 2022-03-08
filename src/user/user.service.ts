@@ -21,7 +21,7 @@ export class UserService {
   ) {}
   async create(createUserInput: CreateUserInput) {
     const { name, cep, email, password } = createUserInput;
-    const userFound = await this.userModel.findOne({ email: email });
+    const userFound = await this.findByEmail(email);
 
     if (!!userFound) throw new BadRequestException('Email já cadastrado ');
 
@@ -67,9 +67,13 @@ export class UserService {
       );
     }
   }
+  async findByEmail(email: string) {
+    const userEmailFound = await this.userModel.findOne({ email: email });
+    return userEmailFound;
+  }
 
   async update(id: string, updateUserInput: UpdateUserInput) {
-    const userFound = await this.userModel.findOne({ id: id });
+    const userFound = await this.findOne(id);
     if (!userFound)
       throw new HttpException(
         { status: HttpStatus.NOT_FOUND, error: 'Usuario não encontrado' },
@@ -103,12 +107,7 @@ export class UserService {
   }
 
   async remove(id: string) {
-    const userFound = await this.userModel.findOne({ id: id });
-    if (!userFound)
-      throw new HttpException(
-        { status: HttpStatus.NOT_FOUND, error: 'Usuario não encontrado' },
-        HttpStatus.NOT_FOUND,
-      );
+    const userFound = await this.findOne(id);
 
     return this.userModel
       .deleteOne({

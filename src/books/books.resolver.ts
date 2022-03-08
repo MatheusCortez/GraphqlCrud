@@ -14,12 +14,12 @@ export class BooksResolver {
   }
 
   @Query(() => [Book], { name: 'books' })
-  findAll() {
+  findAllBooks() {
     return this.booksService.findAll();
   }
 
   @Query(() => Book, { name: 'book' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOneBook(@Args('id', { type: () => Int }) id: number) {
     return this.booksService.findOne(id);
   }
 

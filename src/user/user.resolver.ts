@@ -29,7 +29,6 @@ export class UserResolver {
   async updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     const { id } = updateUserInput;
     const updatedUser = await this.userService.update(id, updateUserInput);
-    console.log(updatedUser);
     return updatedUser;
   }
 

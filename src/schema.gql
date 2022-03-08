@@ -14,19 +14,38 @@ type User {
   id: ID!
   name: String!
   email: String!
-  password: String!
   address: Address!
+}
+
+type Book {
+  id: ID!
+  titulo: String!
+  autor: String!
+  user: String!
+  genero: String!
+  anoDeLancamento: String!
+}
+
+type AuthType {
+  user: User!
+  token: String!
 }
 
 type Query {
   findAll: [User!]!
   findOne(id: ID!): User!
+  books: [Book!]!
+  book(id: Int!): Book!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: ID!): User!
+  createBook(createBookInput: CreateBookInput!): Book!
+  updateBook(updateBookInput: UpdateBookInput!): Book!
+  removeBook(id: Int!): Book!
+  login(data: AuthInput!): AuthType!
 }
 
 input CreateUserInput {
@@ -42,4 +61,24 @@ input UpdateUserInput {
   password: String
   cep: String
   id: String!
+}
+
+input CreateBookInput {
+  titulo: String!
+  autor: String!
+  genero: String!
+  anoDeLancamento: String!
+}
+
+input UpdateBookInput {
+  titulo: String
+  autor: String
+  genero: String
+  anoDeLancamento: String
+  id: Int!
+}
+
+input AuthInput {
+  email: String!
+  password: String!
 }

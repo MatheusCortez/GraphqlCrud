@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Book } from 'src/schemas/books.schema';
+import { BookDocument } from './../schemas/books.schema';
 import { CreateBookInput } from './dto/create-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
 
 @Injectable()
 export class BooksService {
+  constructor(@InjectModel(Book.name) private catModel: Model<BookDocument>) {}
+
   create(createBookInput: CreateBookInput) {
-    return 'This action adds a new book';
+    return;
   }
 
   findAll() {
