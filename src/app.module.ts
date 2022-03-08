@@ -7,15 +7,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Config } from './config/config';
 import { UserModule } from './user/user.module';
+import { ServicesModule } from './services/services.module';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
+    ServicesModule,
     UserModule,
     MongooseModule.forRoot(Config.database.DB_CONFIG),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    ServicesModule,
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
