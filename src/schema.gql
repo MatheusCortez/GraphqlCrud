@@ -11,14 +11,14 @@ type Address {
 }
 
 type User {
-  id: ID!
+  _id: ID!
   name: String!
   email: String!
   address: Address!
 }
 
 type Book {
-  id: ID!
+  _id: ID!
   titulo: String!
   autor: String!
   user: String!
@@ -34,8 +34,9 @@ type AuthType {
 type Query {
   findAll: [User!]!
   findOne(id: ID!): User!
-  books: [Book!]!
-  book(id: Int!): Book!
+  findAllBooks: [Book!]!
+  findAllBooksByTitulo(titulo: String!): [Book!]!
+  findOneBook(id: String!): Book!
 }
 
 type Mutation {
@@ -71,11 +72,11 @@ input CreateBookInput {
 }
 
 input UpdateBookInput {
+  id: String!
   titulo: String
   autor: String
   genero: String
   anoDeLancamento: String
-  id: Int!
 }
 
 input AuthInput {

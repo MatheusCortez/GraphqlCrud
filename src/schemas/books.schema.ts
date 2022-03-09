@@ -8,7 +8,7 @@ ObjectType();
 export class Book {
   @Prop()
   @Field(() => ID)
-  id: string;
+  _id: string;
   @Prop()
   @Field()
   titulo: string;

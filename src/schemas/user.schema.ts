@@ -28,7 +28,7 @@ export type UserDocument = User & Document;
 export class User {
   @Prop()
   @Field(() => ID)
-  id: string;
+  _id: string;
   @Prop()
   @Field()
   name: string;

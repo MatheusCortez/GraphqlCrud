@@ -36,9 +36,8 @@ export class UserService {
         }
       : null;
     const passwordhash = await bcrypt.hash(password, 12);
-
     const user: User = {
-      id: uuid(),
+      _id: uuid(),
       name,
       email,
       password: passwordhash,

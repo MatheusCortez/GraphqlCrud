@@ -4,7 +4,7 @@ import { Address } from 'src/schemas/user.schema';
 @ObjectType()
 export class User {
   @Field(() => ID)
-  id: string;
+  _id: string;
   @Field()
   name: string;
   @Field()
