@@ -70,4 +70,16 @@ export class BooksService {
       },
     );
   }
+
+  async remove(id: string, user) {
+    const { userId } = user;
+    const bookFound = await this.bookModel.findOne({ _id: id, user: userId });
+    if (!bookFound) throw new BadRequestException('Livro não cadastrado');
+    return this.bookModel
+      .deleteOne({
+        _id: id,
+        user: userId,
+      })
+      .exec();
+  }
 }

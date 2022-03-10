@@ -49,7 +49,10 @@ export class BooksResolver {
   }
 
   @Mutation(() => Book)
-  removeBook(@Args('id', { type: () => Int }) id: number) {
-    //  return this.booksService.remove(id);
+  removeBook(
+    @Args('id', { type: () => String }) id: string,
+    @CurrentUser() user,
+  ) {
+    return this.booksService.remove(id, user);
   }
 }
