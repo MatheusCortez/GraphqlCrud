@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { Config } from 'src/config/config';
+import { Config } from '../../config/config';
 import { Address } from 'src/schemas/user.schema';
 
 @Injectable()

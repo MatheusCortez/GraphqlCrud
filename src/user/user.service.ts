@@ -4,6 +4,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -11,7 +12,7 @@ import { uuid } from 'uuidv4';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User, UserDocument } from './../schemas/user.schema';
-import { ApicepService } from 'src/services/apicep/apicep.service';
+import { ApicepService } from '../services/apicep/apicep.service';
 
 @Injectable()
 export class UserService {
@@ -53,18 +54,9 @@ export class UserService {
   }
 
   async findOne(id: string) {
-    try {
-      const user = await this.userModel.findOne({ id: id });
-      return user;
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.NOT_FOUND,
-          error: 'Nenhum usuário encontrado',
-        },
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    const user = await this.userModel.findOne({ _id: id });
+    if (!user) throw new NotFoundException('Nenhum usuário encontrado');
+    return user;
   }
   async findByEmail(email: string) {
     const userEmailFound = await this.userModel.findOne({ email: email });
@@ -73,11 +65,7 @@ export class UserService {
 
   async update(id: string, updateUserInput: UpdateUserInput) {
     const userFound = await this.findOne(id);
-    if (!userFound)
-      throw new HttpException(
-        { status: HttpStatus.NOT_FOUND, error: 'Usuario não encontrado' },
-        HttpStatus.NOT_FOUND,
-      );
+    if (!userFound) throw new NotFoundException('Nenhum usuário encontrado');
     const { name, cep } = updateUserInput;
     const apiCepResponse = await this.apiCepService.search(cep);
     const address = apiCepResponse
@@ -107,11 +95,10 @@ export class UserService {
 
   async remove(id: string) {
     const userFound = await this.findOne(id);
+    if (!userFound) throw new NotFoundException('Nenhum usuário encontrado');
 
-    return this.userModel
-      .deleteOne({
-        id: id,
-      })
-      .exec();
+    return this.userModel.deleteOne({
+      id: id,
+    });
   }
 }
