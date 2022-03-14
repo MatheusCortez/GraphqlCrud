@@ -29,7 +29,7 @@ export class BooksResolver {
     @Args('titulo', { type: () => String }) titulo: string,
     @CurrentUser() user,
   ) {
-    return this.booksService.findByTitutlo(titulo, user);
+    return this.booksService.findByTitulo(titulo, user);
   }
 
   @Query(() => Book)

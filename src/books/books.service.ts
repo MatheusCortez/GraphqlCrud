@@ -2,7 +2,7 @@ import { uuid } from 'uuidv4';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Book } from 'src/schemas/books.schema';
+import { Book } from './entities/book.entity';
 import { BookDocument } from './../schemas/books.schema';
 import { CreateBookInput } from './dto/create-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
@@ -32,7 +32,7 @@ export class BooksService {
       throw new BadRequestException('Nenhum livro Encontrado');
     return books;
   }
-  async findByTitutlo(titulo, user) {
+  async findByTitulo(titulo, user) {
     const { userId } = user;
     const books = await this.bookModel.find({ user: userId, titulo });
     if (books.length === 0)
@@ -75,11 +75,9 @@ export class BooksService {
     const { userId } = user;
     const bookFound = await this.bookModel.findOne({ _id: id, user: userId });
     if (!bookFound) throw new BadRequestException('Livro não cadastrado');
-    return this.bookModel
-      .deleteOne({
-        _id: id,
-        user: userId,
-      })
-      .exec();
+    return this.bookModel.deleteOne({
+      _id: id,
+      user: userId,
+    });
   }
 }

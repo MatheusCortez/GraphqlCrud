@@ -78,9 +78,6 @@ describe('UserService', () => {
         mockModel.create.mockReturnValue(user);
         await mockApiService.search();
         await userService.create(createInputUser);
-        // passo 1 -- mockar uuid,591b6e82-c353-4c14-8546-42cccabcf18c
-        // passo 2 -- mockar a implementacao this.userModel create
-        // verificar chamada do this.model create
       });
       it('should a method model create is called one time', async () => {
         const createInputUser = userMock.giveMeValidCreateInput();
@@ -193,7 +190,6 @@ describe('UserService', () => {
           district: 'Vila Leopoldina',
           address: 'Rua Guaipa',
         });
-        const address = mockApiService.search();
         const updatedUser = await userService.update(
           '591b6e82-c353-4c14-8546-42cccabcf18c',
           updateInput,
